@@ -1,0 +1,472 @@
+================================================================================
+KUMARI CINEMA MANAGEMENT SYSTEM
+Complete Setup & Deployment Guide
+================================================================================
+
+PROJECT OVERVIEW:
+- Framework: ASP.NET Web Forms (.NET Framework 4.7.2)
+- Database: Oracle Database (localhost:1522)
+- Architecture: Three-tier (UI, Business Logic, Data Access)
+- Theme: Dark modern UI with responsive design
+
+================================================================================
+DATABASE SETUP (IMPORTANT - EXECUTE THESE QUERIES FIRST)
+================================================================================
+
+Step 1: Connect to Oracle Database as SYSTEM user
+----
+
+sqlplus system/password@localhost:1522/XEPDB1
+
+Step 2: Create Application User
+----
+
+CREATE USER cinema IDENTIFIED BY 1234;
+GRANT CONNECT, RESOURCE TO cinema;
+GRANT CREATE VIEW, CREATE SEQUENCE TO cinema;
+GRANT UNLIMITED TABLESPACE TO cinema;
+COMMIT;
+
+Step 3: Connect as Cinema User
+----
+
+CONNECT cinema/1234@localhost:1522/XEPDB1
+
+Step 4: Create Sequences
+----
+
+CREATE SEQUENCE USER_SEQ START WITH 1 INCREMENT BY 1;
+CREATE SEQUENCE MOVIE_SEQ START WITH 1 INCREMENT BY 1;
+CREATE SEQUENCE THEATRE_SEQ START WITH 1 INCREMENT BY 1;
+CREATE SEQUENCE HALL_SEQ START WITH 1 INCREMENT BY 1;
+CREATE SEQUENCE SHOW_SEQ START WITH 1 INCREMENT BY 1;
+CREATE SEQUENCE BOOKING_SEQ START WITH 1 INCREMENT BY 1;
+CREATE SEQUENCE TICKET_SEQ START WITH 1 INCREMENT BY 1;
+CREATE SEQUENCE PAYMENT_SEQ START WITH 1 INCREMENT BY 1;
+CREATE SEQUENCE PRICE_SEQ START WITH 1 INCREMENT BY 1;
+CREATE SEQUENCE SEAT_SEQ START WITH 1 INCREMENT BY 1;
+CREATE SEQUENCE CANCEL_SEQ START WITH 1 INCREMENT BY 1;
+
+COMMIT;
+
+Step 5: Create Tables
+----
+
+CREATE TABLE Users (
+    UserID INT PRIMARY KEY,
+    UserName VARCHAR2(100) NOT NULL,
+    Email VARCHAR2(100),
+    ContactNumber VARCHAR2(15),
+    Address VARCHAR2(150),
+    DateOfBirth DATE,
+    Gender VARCHAR2(20),
+    MembershipTier VARCHAR2(20)
+);
+
+CREATE TABLE Theatre (
+    TheatreID INT PRIMARY KEY,
+    TheatreName VARCHAR2(100) NOT NULL,
+    TheatreCity VARCHAR2(50) NOT NULL,
+    TheatreAddress VARCHAR2(150),
+    TheatreContactNumber VARCHAR2(15),
+    TheatreEmail VARCHAR2(100),
+    ParkingCapacity INT
+);
+
+CREATE TABLE Hall (
+    HallID INT PRIMARY KEY,
+    HallName VARCHAR2(100) NOT NULL,
+    HallCapacity INT NOT NULL,
+    ExperienceType VARCHAR2(50),
+    ScreenSize VARCHAR2(30),
+    TheatreID INT,
+    Has3D CHAR(1) DEFAULT 'N',
+    FOREIGN KEY (TheatreID) REFERENCES Theatre(TheatreID)
+);
+
+CREATE TABLE Movie (
+    MovieID INT PRIMARY KEY,
+    Title VARCHAR2(100) NOT NULL,
+    Duration INT NOT NULL,
+    Genre VARCHAR2(50),
+    Language VARCHAR2(50),
+    ReleaseDate DATE,
+    Director VARCHAR2(100),
+    Cast VARCHAR2(300),
+    Rating VARCHAR2(10),
+    Description VARCHAR2(500)
+);
+
+CREATE TABLE Shows (
+    ShowID INT PRIMARY KEY,
+    ShowDate DATE NOT NULL,
+    ShowTime VARCHAR2(10) NOT NULL,
+    StartTime VARCHAR2(10),
+    EndTime VARCHAR2(10),
+    MovieID INT,
+    HallID INT,
+    FOREIGN KEY (MovieID) REFERENCES Movie(MovieID),
+    FOREIGN KEY (HallID) REFERENCES Hall(HallID)
+);
+
+CREATE TABLE Booking (
+    BookingID INT PRIMARY KEY,
+    ConfirmationNumber VARCHAR2(50),
+    BookingTime DATE,
+    ReservationDate DATE,
+    ShowID INT,
+    UserID INT,
+    PaymentID INT,
+    BookingStatus VARCHAR2(20),
+    TotalAmount DECIMAL(10,2),
+    NumberOfSeats INT,
+    CONSTRAINT fk_booking_show FOREIGN KEY (ShowID) REFERENCES Shows(ShowID),
+    CONSTRAINT fk_booking_user FOREIGN KEY (UserID) REFERENCES Users(UserID)
+);
+
+CREATE TABLE Payment (
+    PaymentID INT PRIMARY KEY,
+    PaymentAmount NUMBER(10, 2),
+    PaymentStatus VARCHAR2(50),
+    PaymentMethod VARCHAR2(50),
+    PaymentDate DATE DEFAULT SYSDATE,
+    TransactionID VARCHAR2(100),
+    PaymentGateway VARCHAR2(50)
+);
+
+CREATE TABLE Price (
+    PriceID INT PRIMARY KEY,
+    Amount DECIMAL(10,2) NOT NULL,
+    PriceCategory VARCHAR2(50),
+    IsFestiveSeason CHAR(1),
+    IsReleaseWeek CHAR(1),
+    EffectiveDate DATE,
+    ExpiryDate DATE,
+    DiscountPercentage INT
+);
+
+CREATE TABLE Seat (
+    SeatID INT PRIMARY KEY,
+    SeatRow VARCHAR2(5),
+    SeatNumber INT,
+    SeatCategory VARCHAR2(30),
+    HallID INT,
+    IsAvailable CHAR(1),
+    SeatPrice DECIMAL(10,2),
+    IsBlocked CHAR(1),
+    FOREIGN KEY (HallID) REFERENCES Hall(HallID)
+);
+
+CREATE TABLE Cancellation (
+    CancellationID INT PRIMARY KEY,
+    CancellationTime TIMESTAMP,
+    CancellationReason VARCHAR2(200),
+    CancellationStatus VARCHAR2(50),
+    RefundAmount DECIMAL(10,2),
+    RefundStatus VARCHAR2(50),
+    CancelledBy VARCHAR2(100),
+    RefundMethod VARCHAR2(50)
+);
+
+CREATE TABLE Ticket (
+    TicketID INT PRIMARY KEY,
+    TicketStatus VARCHAR2(50),
+    TicketNumber VARCHAR2(50),
+    BookingID INT,
+    SeatID INT,
+    CancellationID INT,
+    PriceID INT,
+    QRCode VARCHAR2(200),
+    CheckInTime TIMESTAMP,
+    IsScanned CHAR(1),
+    FOREIGN KEY (BookingID) REFERENCES Booking(BookingID),
+    FOREIGN KEY (SeatID) REFERENCES Seat(SeatID),
+    FOREIGN KEY (CancellationID) REFERENCES Cancellation(CancellationID),
+    FOREIGN KEY (PriceID) REFERENCES Price(PriceID)
+);
+
+COMMIT;
+
+================================================================================
+APPLICATION SETUP & INSTALLATION
+================================================================================
+
+REQUIREMENTS:
+- Visual Studio 2019 or 2022
+- .NET Framework 4.7.2
+- Oracle Data Access Components (ODAC) for .NET
+
+INSTALLATION STEPS:
+
+1. Install Oracle.ManagedDataAccess NuGet Package:
+   - In Visual Studio: Tools > NuGet Package Manager > Package Manager Console
+   - Run: Install-Package Oracle.ManagedDataAccess
+   - Run: Install-Package Oracle.ManagedDataAccess.EntityFramework
+
+2. Verify Web.config Connection String:
+   - File: KumariCinema/Web.config
+   - Connection String: User Id=cinema;Password=1234;Data Source=localhost:1522/XEPDB1;
+
+3. Build Solution:
+   - Visual Studio > Build > Build Solution
+   - Ensure no compilation errors
+
+4. Start Application:
+   - Visual Studio > Debug > Start Debugging (F5)
+   - Application will load at http://localhost:port/Dashboard.aspx
+
+================================================================================
+PAGES & FUNCTIONALITY
+================================================================================
+
+1. DASHBOARD (Dashboard.aspx)
+   - 6 Statistics Cards (Movies, Theatres, Shows, Tickets, Customers, Revenue)
+   - 2 Chart.js Visualizations (Payment & Ticket Status)
+   - 6 Breakdown Cards (Payment & Ticket Details)
+   - 4 Data Sections (Recent Movies, Bookings, Halls, Upcoming Shows)
+
+2. MOVIE MANAGEMENT (MovieDetails.aspx)
+   - CRUD Operations: Create, Read, Update, Delete
+   - Search functionality by title or genre
+   - Pagination (20 per page)
+   - Fields: Title, Duration, Genre, Language, Release Date, Director, Cast, Rating, Description
+
+3. THEATRE MANAGEMENT (TheatreDetails.aspx)
+   - CRUD Operations
+   - Fields: Name, City, Address, Contact, Email, Parking Capacity
+   - Edit/Delete with confirmation
+
+4. HALL MANAGEMENT (HallDetails.aspx)
+   - CRUD Operations
+   - Fields: Name, Capacity, Experience Type, Screen Size, Theatre, 3D Support
+   - Experience Types: IMAX, 4DX, Dolby Atmos, Standard
+
+5. SHOWTIME MANAGEMENT (ShowtimeDetails.aspx)
+   - CRUD Operations
+   - Schedule shows for specific date/time/movie/hall
+   - Time slots: 9:00 AM, 12:00 PM, 3:00 PM, 6:00 PM, 9:00 PM
+
+6. BOOKING MANAGEMENT (BookingDetails.aspx)
+   - Create bookings linking customer + show
+   - Auto-generate confirmation numbers
+   - View booking history
+
+7. TICKET MANAGEMENT (TicketDetails.aspx)
+   - Issue tickets from bookings
+   - Track ticket status (CONFIRMED, USED, CANCELLED)
+   - Auto-generate ticket numbers
+
+8. PAYMENT MANAGEMENT (PaymentDetails.aspx)
+   - Record payments
+   - Payment Methods: Credit Card, Debit Card, UPI, Net Banking, Wallet, Cash
+   - Payment Status: COMPLETED, PENDING, FAILED, REFUNDED
+
+9. SEAT MANAGEMENT (SeatDetails.aspx)
+   - Add seats to halls
+   - Row-wise seating (A, B, C, D, E...)
+   - Categories: Regular, Premium, Recliner, VIP
+   - Track availability
+
+10. CUSTOMER MANAGEMENT (CustomerDetails.aspx)
+    - Register/Edit customers
+    - Fields: Name, Email, Phone, Address, DOB, Gender, Membership Tier
+    - View customer list
+
+================================================================================
+UI THEME & STYLING
+================================================================================
+
+COLOR SCHEME:
+- Primary Background: #0f172a (Dark Navy)
+- Secondary Background: #1e293b (Slate)
+- Accent Color: #dc2626 (Red)
+- Success: #16a34a (Green)
+- Warning: #eab308 (Yellow)
+- Text Primary: #f1f5f9 (Light)
+- Text Secondary: #64748b (Gray)
+- Border: #334155 (Dark Gray)
+
+LAYOUT:
+- Sidebar: 260px fixed navigation
+- Top Bar: Search + User Profile
+- Content Area: Main workspace
+- Responsive Design: Mobile-friendly
+
+================================================================================
+DATABASE QUERIES REFERENCE
+================================================================================
+
+Get Dashboard Statistics:
+
+-- Total Movies
+SELECT COUNT(*) FROM Movie;
+
+-- Shows Today
+SELECT COUNT(*) FROM Shows WHERE TRUNC(ShowDate) = TRUNC(SYSDATE);
+
+-- Tickets Sold Today
+SELECT COUNT(*) FROM Ticket T
+INNER JOIN Booking B ON T.BookingID = B.BookingID
+WHERE TRUNC(B.ReservationDate) = TRUNC(SYSDATE)
+AND UPPER(T.TicketStatus) = 'CONFIRMED';
+
+-- Revenue (Completed)
+SELECT NVL(SUM(PaymentAmount), 0) FROM Payment 
+WHERE UPPER(PaymentStatus) = 'COMPLETED';
+
+-- Payment Status Distribution
+SELECT 
+    NVL(UPPER(TRIM(PaymentStatus)), 'UNKNOWN') AS STATUS,
+    COUNT(*) AS COUNT,
+    NVL(SUM(PaymentAmount), 0) AS AMOUNT
+FROM Payment
+GROUP BY UPPER(TRIM(PaymentStatus))
+ORDER BY COUNT(*) DESC;
+
+-- Ticket Status Distribution
+SELECT 
+    NVL(UPPER(TRIM(TicketStatus)), 'UNKNOWN') AS STATUS,
+    COUNT(*) AS COUNT
+FROM Ticket
+GROUP BY UPPER(TRIM(TicketStatus))
+ORDER BY COUNT(*) DESC;
+
+================================================================================
+TROUBLESHOOTING
+================================================================================
+
+ISSUE: "ORA-12514: TNS:listener does not currently know of service requested"
+SOLUTION: Check Oracle Database is running
+         - Verify connection string: localhost:1522/XEPDB1
+         - Use SQL*Plus to test connection: sqlplus cinema/1234@localhost:1522/XEPDB1
+
+ISSUE: "Oracle.ManagedDataAccess not found"
+SOLUTION: Install NuGet package:
+         - Package Manager Console: Install-Package Oracle.ManagedDataAccess
+
+ISSUE: "No tables found"
+SOLUTION: Ensure you executed all CREATE TABLE statements in Step 4-5
+         - Connect as CINEMA user and verify tables with: SELECT * FROM user_tables;
+
+ISSUE: "Sequence does not exist"
+SOLUTION: Create sequences from Step 4
+         - Verify with: SELECT * FROM user_sequences;
+
+================================================================================
+DEPLOYMENT CHECKLIST
+================================================================================
+
+Development Environment:
+[ ] Visual Studio 2019/2022 installed
+[ ] .NET Framework 4.7.2 SDK installed
+[ ] Oracle Database running on localhost:1522
+[ ] CINEMA user created with correct privileges
+[ ] All tables created successfully
+[ ] All sequences created
+[ ] Oracle.ManagedDataAccess NuGet package installed
+[ ] Web.config connection string updated
+[ ] Project builds without errors
+[ ] Dashboard displays without errors
+[ ] All 10 CRUD pages functional
+
+Production Environment (IIS):
+[ ] IIS configured
+[ ] Application pool set to .NET Framework 4.7.2
+[ ] Oracle client installed on server
+[ ] Database connection string configured for production
+[ ] File permissions set correctly
+[ ] Backup strategy in place
+[ ] Error logging configured
+
+================================================================================
+SAMPLE DATA INSERTION (Optional)
+================================================================================
+
+-- Insert Test Theatre
+INSERT INTO Theatre VALUES (1, 'Kumari Cinema Kathmandu', 'Kathmandu', 'New Road', '9851234567', 'info@kumari.com', 150);
+INSERT INTO Theatre VALUES (2, 'Kumari Cinema Pokhara', 'Pokhara', 'Lakeside', '9851234568', 'pokhara@kumari.com', 100);
+
+-- Insert Test Hall
+INSERT INTO Hall VALUES (1, 'Hall A - IMAX', 250, 'IMAX', 'Large', 1, 'Y');
+INSERT INTO Hall VALUES (2, 'Hall B - 4DX', 200, '4DX', 'Large', 1, 'N');
+INSERT INTO Hall VALUES (3, 'Hall C - Standard', 150, 'Standard', 'Medium', 2, 'N');
+
+-- Insert Test Movie
+INSERT INTO Movie VALUES (1, 'Avatar 3', 180, 'Sci-Fi', 'English', TO_DATE('2024-12-15', 'YYYY-MM-DD'), 'James Cameron', 'Sam Worthington, Zoe Saldana', 'UA', 'Epic sci-fi adventure');
+
+-- Insert Test Customer
+INSERT INTO Users VALUES (1, 'John Doe', 'john@email.com', '9841234567', 'Kathmandu', NULL, 'Male', 'Gold');
+
+-- Insert Test Show
+INSERT INTO Shows VALUES (1, TRUNC(SYSDATE) + 1, '18:00', '18:00', '20:20', 1, 1);
+
+-- Insert Test Payment
+INSERT INTO Payment VALUES (1, 500, 'COMPLETED', 'Credit Card', SYSDATE, 'TXN001', 'Stripe');
+
+-- Insert Test Booking
+INSERT INTO Booking VALUES (1, 'BOOK-2024-0001', SYSDATE, SYSDATE, 1, 1, 1, 'CONFIRMED', 1000, 2);
+
+-- Insert Test Seats
+INSERT INTO Seat VALUES (1, 'A', 1, 'Regular', 1, 'Y', 500, 'N');
+INSERT INTO Seat VALUES (2, 'A', 2, 'Regular', 1, 'Y', 500, 'N');
+INSERT INTO Seat VALUES (3, 'A', 3, 'Premium', 1, 'Y', 750, 'N');
+
+-- Insert Test Ticket
+INSERT INTO Ticket VALUES (1, 'CONFIRMED', 'TKT-2024-0001', 1, 1, NULL, NULL, NULL, NULL, 'N');
+
+COMMIT;
+
+================================================================================
+KEY FEATURES IMPLEMENTED
+================================================================================
+
+? Dark Modern UI with Responsive Design
+? Sidebar Navigation (10 menu items)
+? Dashboard with Real-time Statistics
+? Interactive Chart.js Visualizations
+? 10 Complete CRUD Pages
+? GridView with Pagination (20 per page)
+? Search & Filter Functionality
+? Form Validation
+? Success/Error Message Alerts
+? Parameterized Queries (SQL Injection Protection)
+? Try-Catch Error Handling
+? Debug Logging
+? Oracle Database Integration
+? Auto-generated IDs (Sequences)
+? Role-based Confirmation Numbers & Ticket Numbers
+
+================================================================================
+FUTURE ENHANCEMENTS
+================================================================================
+
+1. User Authentication & Authorization
+2. Seat Selection Interface (Visual Layout)
+3. Email Notifications
+4. Advanced Reporting & Analytics
+5. Food & Beverage Management
+6. Offers & Promotions System
+7. Customer Reviews & Ratings
+8. Mobile App Integration
+9. Payment Gateway Integration (Stripe, PayPal)
+10. QR Code Generation & Scanning
+
+================================================================================
+SUPPORT & DOCUMENTATION
+================================================================================
+
+For detailed information on:
+- Database Schema: See CREATE TABLE statements above
+- API Documentation: Review code comments in .aspx.cs files
+- Query Examples: See DATABASE QUERIES REFERENCE section
+- Connection Details: Check Web.config
+
+For Issues:
+- Check Debug.WriteLine() logs in Output window
+- Review Error Messages in AlertLabel controls
+- Verify database connectivity with SQL*Plus
+- Check NuGet package installation
+
+================================================================================
+END OF DOCUMENTATION
+================================================================================

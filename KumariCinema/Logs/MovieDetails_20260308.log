@@ -1,0 +1,273 @@
+[2026-03-08 15:55:48.827] === Page_Load Started ===
+[2026-03-08 15:55:48.839] Connection String: User Id=cinema;Password=1234;Data Source=localhost:1522/ORCLPDB;
+[2026-03-08 15:55:48.845] LoadMovies called with searchTerm: ''
+[2026-03-08 15:55:48.845] Creating OracleConnection...
+[2026-03-08 15:55:48.849] Connection opened successfully!
+[2026-03-08 15:55:48.853] Executing query: SELECT MovieID, Title, Genre, Language, Duration, ReleaseDate, Director, Cast, Rating, Description
+                                   FROM Movie ORDER BY ReleaseDate DESC
+[2026-03-08 15:55:48.904] ? ERROR in LoadMovies: OracleException
+[2026-03-08 15:55:48.904] Message: ORA-00904: "DESCRIPTION": invalid identifier
+https://docs.oracle.com/error-help/db/ora-00904/
+[2026-03-08 15:55:48.953] StackTrace:    at OracleInternal.ServiceObjects.OracleFailoverMgrImpl.OnError(OracleConnection connection, CallHistoryRecord chr, Object mi, Exception ex, Boolean bTopLevelCall, Boolean& bCanRecordNewCall)
+   at Oracle.ManagedDataAccess.Client.OracleDataAdapter.Fill(DataTable dataTable)
+   at KumariCinema.MovieDetails.LoadMovies(String searchTerm) in C:\Users\asus\Desktop\KumariCinema\KumariCinema\MovieDetails.aspx.cs:line 84
+[2026-03-08 15:55:57.092] === Page_Load Started ===
+[2026-03-08 15:55:57.092] Connection String: User Id=cinema;Password=1234;Data Source=localhost:1522/ORCLPDB;
+[2026-03-08 15:55:57.094] LoadMovies called with searchTerm: ''
+[2026-03-08 15:55:57.094] Creating OracleConnection...
+[2026-03-08 15:55:57.095] Connection opened successfully!
+[2026-03-08 15:55:57.096] Executing query: SELECT MovieID, Title, Genre, Language, Duration, ReleaseDate, Director, Cast, Rating, Description
+                                   FROM Movie ORDER BY ReleaseDate DESC
+[2026-03-08 15:55:57.154] ? ERROR in LoadMovies: OracleException
+[2026-03-08 15:55:57.164] Message: ORA-00904: "DESCRIPTION": invalid identifier
+https://docs.oracle.com/error-help/db/ora-00904/
+[2026-03-08 15:55:57.166] StackTrace:    at OracleInternal.ServiceObjects.OracleFailoverMgrImpl.OnError(OracleConnection connection, CallHistoryRecord chr, Object mi, Exception ex, Boolean bTopLevelCall, Boolean& bCanRecordNewCall)
+   at Oracle.ManagedDataAccess.Client.OracleDataAdapter.Fill(DataTable dataTable)
+   at KumariCinema.MovieDetails.LoadMovies(String searchTerm) in C:\Users\asus\Desktop\KumariCinema\KumariCinema\MovieDetails.aspx.cs:line 84
+[2026-03-08 16:03:33.451] === Page_Load Started ===
+[2026-03-08 16:03:33.451] Connection String: User Id=cinema;Password=1234;Data Source=localhost:1522/ORCLPDB;
+[2026-03-08 16:03:33.456] LoadMovies called with searchTerm: ''
+[2026-03-08 16:03:33.458] Creating OracleConnection...
+[2026-03-08 16:03:33.458] Connection opened successfully!
+[2026-03-08 16:03:33.462] Executing query: SELECT MovieID, Title, Genre, Language, Duration, ReleaseDate, Director, Cast, Rating, Description
+                                   FROM Movie ORDER BY ReleaseDate DESC
+[2026-03-08 16:03:33.517] ? ERROR in LoadMovies: OracleException
+[2026-03-08 16:03:33.517] Message: ORA-00904: "DESCRIPTION": invalid identifier
+https://docs.oracle.com/error-help/db/ora-00904/
+[2026-03-08 16:03:33.541] StackTrace:    at OracleInternal.ServiceObjects.OracleFailoverMgrImpl.OnError(OracleConnection connection, CallHistoryRecord chr, Object mi, Exception ex, Boolean bTopLevelCall, Boolean& bCanRecordNewCall)
+   at Oracle.ManagedDataAccess.Client.OracleDataAdapter.Fill(DataTable dataTable)
+   at KumariCinema.MovieDetails.LoadMovies(String searchTerm) in C:\Users\asus\Desktop\KumariCinema\KumariCinema\MovieDetails.aspx.cs:line 84
+[2026-03-08 16:03:37.519] === Page_Load Started ===
+[2026-03-08 16:03:37.524] Connection String: User Id=cinema;Password=1234;Data Source=localhost:1522/ORCLPDB;
+[2026-03-08 16:03:37.524] LoadMovies called with searchTerm: ''
+[2026-03-08 16:03:37.526] Creating OracleConnection...
+[2026-03-08 16:03:37.526] Connection opened successfully!
+[2026-03-08 16:03:37.528] Executing query: SELECT MovieID, Title, Genre, Language, Duration, ReleaseDate, Director, Cast, Rating, Description
+                                   FROM Movie ORDER BY ReleaseDate DESC
+[2026-03-08 16:03:37.584] ? ERROR in LoadMovies: OracleException
+[2026-03-08 16:03:37.585] Message: ORA-00904: "DESCRIPTION": invalid identifier
+https://docs.oracle.com/error-help/db/ora-00904/
+[2026-03-08 16:03:37.585] StackTrace:    at OracleInternal.ServiceObjects.OracleFailoverMgrImpl.OnError(OracleConnection connection, CallHistoryRecord chr, Object mi, Exception ex, Boolean bTopLevelCall, Boolean& bCanRecordNewCall)
+   at Oracle.ManagedDataAccess.Client.OracleDataAdapter.Fill(DataTable dataTable)
+   at KumariCinema.MovieDetails.LoadMovies(String searchTerm) in C:\Users\asus\Desktop\KumariCinema\KumariCinema\MovieDetails.aspx.cs:line 84
+[2026-03-08 16:04:25.905] === Page_Load Started ===
+[2026-03-08 16:04:25.909] Connection String: User Id=cinema;Password=1234;Data Source=localhost:1522/ORCLPDB;
+[2026-03-08 16:04:25.911] LoadMovies called with searchTerm: ''
+[2026-03-08 16:04:25.913] Creating OracleConnection...
+[2026-03-08 16:04:25.913] Connection opened successfully!
+[2026-03-08 16:04:25.913] Executing query: SELECT MovieID, Title, Genre, Language, Duration, ReleaseDate, Director, Cast, Rating, Description
+                                   FROM Movie ORDER BY ReleaseDate DESC
+[2026-03-08 16:04:25.971] ? ERROR in LoadMovies: OracleException
+[2026-03-08 16:04:25.971] Message: ORA-00904: "DESCRIPTION": invalid identifier
+https://docs.oracle.com/error-help/db/ora-00904/
+[2026-03-08 16:04:25.971] StackTrace:    at OracleInternal.ServiceObjects.OracleFailoverMgrImpl.OnError(OracleConnection connection, CallHistoryRecord chr, Object mi, Exception ex, Boolean bTopLevelCall, Boolean& bCanRecordNewCall)
+   at Oracle.ManagedDataAccess.Client.OracleDataAdapter.Fill(DataTable dataTable)
+   at KumariCinema.MovieDetails.LoadMovies(String searchTerm) in C:\Users\asus\Desktop\KumariCinema\KumariCinema\MovieDetails.aspx.cs:line 84
+[2026-03-08 16:26:52.594] === Page_Load Started ===
+[2026-03-08 16:26:52.596] Connection String: User Id=cinema;Password=1234;Data Source=localhost:1522/ORCLPDB;
+[2026-03-08 16:26:52.598] LoadMovies called with searchTerm: ''
+[2026-03-08 16:26:52.599] Creating OracleConnection...
+[2026-03-08 16:26:52.599] Connection opened successfully!
+[2026-03-08 16:26:52.600] Executing query: SELECT MovieID, Title, Genre, Language, Duration, ReleaseDate
+                                   FROM Movie ORDER BY ReleaseDate DESC
+[2026-03-08 16:26:52.634] ? Movies loaded successfully: 5 movies
+[2026-03-08 16:26:56.085] === Page_Load Started ===
+[2026-03-08 16:26:56.093] Connection String: User Id=cinema;Password=1234;Data Source=localhost:1522/ORCLPDB;
+[2026-03-08 16:26:56.095] LoadMovies called with searchTerm: ''
+[2026-03-08 16:26:56.095] Creating OracleConnection...
+[2026-03-08 16:26:56.096] Connection opened successfully!
+[2026-03-08 16:26:56.096] Executing query: SELECT MovieID, Title, Genre, Language, Duration, ReleaseDate
+                                   FROM Movie ORDER BY ReleaseDate DESC
+[2026-03-08 16:26:56.106] ? Movies loaded successfully: 5 movies
+[2026-03-08 16:27:00.779] === Page_Load Started ===
+[2026-03-08 16:27:00.781] Connection String: User Id=cinema;Password=1234;Data Source=localhost:1522/ORCLPDB;
+[2026-03-08 16:27:00.784] LoadMovies called with searchTerm: ''
+[2026-03-08 16:27:00.787] Creating OracleConnection...
+[2026-03-08 16:27:00.790] Connection opened successfully!
+[2026-03-08 16:27:00.793] Executing query: SELECT MovieID, Title, Genre, Language, Duration, ReleaseDate
+                                   FROM Movie ORDER BY ReleaseDate DESC
+[2026-03-08 16:27:00.796] ? Movies loaded successfully: 5 movies
+[2026-03-08 16:27:14.979] === Page_Load Started ===
+[2026-03-08 16:27:14.983] Connection String: User Id=cinema;Password=1234;Data Source=localhost:1522/ORCLPDB;
+[2026-03-08 16:27:14.997] LoadMovies called with searchTerm: ''
+[2026-03-08 16:27:14.999] Creating OracleConnection...
+[2026-03-08 16:27:15.001] Connection opened successfully!
+[2026-03-08 16:27:15.002] Executing query: SELECT MovieID, Title, Genre, Language, Duration, ReleaseDate
+                                   FROM Movie ORDER BY ReleaseDate DESC
+[2026-03-08 16:27:15.004] ? Movies loaded successfully: 5 movies
+[2026-03-08 16:33:47.254] === Page_Load Started ===
+[2026-03-08 16:33:47.256] Connection String: User Id=cinema;Password=1234;Data Source=localhost:1522/ORCLPDB;
+[2026-03-08 16:33:47.259] LoadMovies called with searchTerm: ''
+[2026-03-08 16:33:47.260] Creating OracleConnection...
+[2026-03-08 16:33:47.262] Connection opened successfully!
+[2026-03-08 16:33:47.263] Executing query: SELECT MovieID, Title, Genre, Language, Duration, ReleaseDate
+                                   FROM Movie ORDER BY ReleaseDate DESC
+[2026-03-08 16:33:47.291] ? Movies loaded successfully: 5 movies
+[2026-03-08 16:52:37.652] === Page_Load Started ===
+[2026-03-08 16:52:37.654] Connection String: User Id=cinema;Password=1234;Data Source=localhost:1522/ORCLPDB;
+[2026-03-08 16:52:37.657] LoadMovies called with searchTerm: ''
+[2026-03-08 16:52:37.660] Creating OracleConnection...
+[2026-03-08 16:52:37.661] Connection opened successfully!
+[2026-03-08 16:52:37.663] Executing query: SELECT MovieID, Title, Genre, Language, Duration, ReleaseDate
+                                   FROM Movie ORDER BY ReleaseDate DESC
+[2026-03-08 16:52:37.670] ? Movies loaded successfully: 5 movies
+[2026-03-08 16:57:29.228] === Page_Load Started ===
+[2026-03-08 16:57:29.230] Connection String: User Id=cinema;Password=1234;Data Source=localhost:1522/ORCLPDB;
+[2026-03-08 16:57:29.233] LoadMovies called with searchTerm: ''
+[2026-03-08 16:57:29.235] Creating OracleConnection...
+[2026-03-08 16:57:29.236] Connection opened successfully!
+[2026-03-08 16:57:29.238] Executing query: SELECT MovieID, Title, Genre, Language, Duration, ReleaseDate
+                                   FROM Movie ORDER BY ReleaseDate DESC
+[2026-03-08 16:57:29.248] ? Movies loaded successfully: 5 movies
+[2026-03-08 17:09:52.910] === Page_Load Started ===
+[2026-03-08 17:09:52.912] Connection String: User Id=cinema;Password=1234;Data Source=localhost:1522/ORCLPDB;
+[2026-03-08 17:09:52.915] LoadMovies called with searchTerm: ''
+[2026-03-08 17:09:52.917] Creating OracleConnection...
+[2026-03-08 17:09:52.919] Connection opened successfully!
+[2026-03-08 17:09:52.920] Executing query: SELECT MovieID, Title, Genre, Language, Duration, ReleaseDate
+                                   FROM Movie ORDER BY ReleaseDate DESC
+[2026-03-08 17:09:52.927] ? Movies loaded successfully: 5 movies
+[2026-03-08 17:50:24.722] === Page_Load Started ===
+[2026-03-08 17:50:24.723] Connection String: User Id=cinema;Password=1234;Data Source=localhost:1522/ORCLPDB;
+[2026-03-08 17:50:24.726] LoadMovies called with searchTerm: ''
+[2026-03-08 17:50:24.728] Creating OracleConnection...
+[2026-03-08 17:50:24.730] Connection opened successfully!
+[2026-03-08 17:50:24.732] Executing query: SELECT MovieID, Title, Genre, Language, Duration, ReleaseDate
+                                   FROM Movie ORDER BY ReleaseDate DESC
+[2026-03-08 17:50:24.747] ? Movies loaded successfully: 5 movies
+[2026-03-08 17:51:43.687] === Page_Load Started ===
+[2026-03-08 17:51:43.691] Connection String: User Id=cinema;Password=1234;Data Source=localhost:1522/ORCLPDB;
+[2026-03-08 17:51:43.692] LoadMovies called with searchTerm: ''
+[2026-03-08 17:51:43.694] Creating OracleConnection...
+[2026-03-08 17:51:43.696] Connection opened successfully!
+[2026-03-08 17:51:43.700] Executing query: SELECT MovieID, Title, Genre, Language, Duration, ReleaseDate
+                                   FROM Movie ORDER BY ReleaseDate DESC
+[2026-03-08 17:51:43.719] ? Movies loaded successfully: 5 movies
+[2026-03-08 17:51:45.107] === Page_Load Started ===
+[2026-03-08 17:51:45.108] Connection String: User Id=cinema;Password=1234;Data Source=localhost:1522/ORCLPDB;
+[2026-03-08 17:51:45.109] LoadMovies called with searchTerm: ''
+[2026-03-08 17:51:45.110] Creating OracleConnection...
+[2026-03-08 17:51:45.112] Connection opened successfully!
+[2026-03-08 17:51:45.114] Executing query: SELECT MovieID, Title, Genre, Language, Duration, ReleaseDate
+                                   FROM Movie ORDER BY ReleaseDate DESC
+[2026-03-08 17:51:45.117] ? Movies loaded successfully: 5 movies
+[2026-03-08 17:53:41.119] === Page_Load Started ===
+[2026-03-08 17:53:41.120] Connection String: User Id=cinema;Password=1234;Data Source=localhost:1522/ORCLPDB;
+[2026-03-08 17:53:41.120] LoadMovies called with searchTerm: ''
+[2026-03-08 17:53:41.122] Creating OracleConnection...
+[2026-03-08 17:53:41.122] Connection opened successfully!
+[2026-03-08 17:53:41.124] Executing query: SELECT MovieID, Title, Genre, Language, Duration, ReleaseDate
+                                   FROM Movie ORDER BY ReleaseDate DESC
+[2026-03-08 17:53:41.127] ? Movies loaded successfully: 5 movies
+[2026-03-08 18:09:31.313] === Page_Load Started ===
+[2026-03-08 18:09:31.316] Connection String: User Id=cinema;Password=1234;Data Source=localhost:1522/ORCLPDB;
+[2026-03-08 18:09:31.320] LoadMovies called with searchTerm: ''
+[2026-03-08 18:09:31.321] Creating OracleConnection...
+[2026-03-08 18:09:31.323] Connection opened successfully!
+[2026-03-08 18:09:31.324] Executing query: SELECT MovieID, Title, Genre, Language, Duration, ReleaseDate
+                                   FROM Movie ORDER BY ReleaseDate DESC
+[2026-03-08 18:09:31.341] ? Movies loaded successfully: 5 movies
+[2026-03-08 18:22:18.064] === btnSave_Click Started ===
+[2026-03-08 18:22:18.068] Connection opened for Save operation
+[2026-03-08 18:22:18.069] Inserting new movie
+[2026-03-08 18:22:18.329] ? Movie saved successfully
+[2026-03-08 18:22:18.331] LoadMovies called with searchTerm: ''
+[2026-03-08 18:22:18.333] Creating OracleConnection...
+[2026-03-08 18:22:18.472] Connection opened successfully!
+[2026-03-08 18:22:18.474] Executing query: SELECT MovieID, Title, Genre, Language, Duration, ReleaseDate
+                                   FROM Movie ORDER BY ReleaseDate DESC
+[2026-03-08 18:22:18.479] ? Movies loaded successfully: 6 movies
+[2026-03-08 18:25:22.823] === Page_Load Started ===
+[2026-03-08 18:25:22.827] Connection String: User Id=cinema;Password=1234;Data Source=localhost:1522/ORCLPDB;
+[2026-03-08 18:25:22.828] LoadMovies called with searchTerm: ''
+[2026-03-08 18:25:22.830] Creating OracleConnection...
+[2026-03-08 18:25:22.832] Connection opened successfully!
+[2026-03-08 18:25:22.834] Executing query: SELECT MovieID, Title, Genre, Language, Duration, ReleaseDate
+                                   FROM Movie ORDER BY ReleaseDate DESC
+[2026-03-08 18:25:22.847] ? Movies loaded successfully: 6 movies
+[2026-03-08 18:47:51.935] === Page_Load Started ===
+[2026-03-08 18:47:51.936] Connection String: User Id=cinema;Password=1234;Data Source=localhost:1522/ORCLPDB;
+[2026-03-08 18:47:51.939] LoadMovies called with searchTerm: ''
+[2026-03-08 18:47:51.940] Creating OracleConnection...
+[2026-03-08 18:47:51.942] Connection opened successfully!
+[2026-03-08 18:47:51.943] Executing query: SELECT MovieID, Title, Genre, Language, Duration, ReleaseDate
+                                   FROM Movie ORDER BY ReleaseDate DESC
+[2026-03-08 18:47:51.951] ? Movies loaded successfully: 6 movies
+[2026-03-08 18:47:55.109] LoadMovieForEdit called with movieID: 6
+[2026-03-08 18:47:55.112] Connection opened for edit load
+[2026-03-08 18:47:55.132] ? Movie loaded for edit: 6
+[2026-03-08 18:49:24.206] === btnSave_Click Started ===
+[2026-03-08 18:49:24.209] Connection opened for Save operation
+[2026-03-08 18:49:24.210] Updating movie ID: 6
+[2026-03-08 18:49:24.233] ? Movie saved successfully
+[2026-03-08 18:49:24.234] LoadMovies called with searchTerm: ''
+[2026-03-08 18:49:24.235] Creating OracleConnection...
+[2026-03-08 18:49:24.237] Connection opened successfully!
+[2026-03-08 18:49:24.237] Executing query: SELECT MovieID, Title, Genre, Language, Duration, ReleaseDate
+                                   FROM Movie ORDER BY ReleaseDate DESC
+[2026-03-08 18:49:24.239] ? Movies loaded successfully: 6 movies
+[2026-03-08 18:49:34.269] === btnSave_Click Started ===
+[2026-03-08 18:49:34.271] Validation failed: Title is empty
+[2026-03-08 18:50:05.891] LoadMovieForEdit called with movieID: 6
+[2026-03-08 18:50:05.892] Connection opened for edit load
+[2026-03-08 18:50:05.896] ? Movie loaded for edit: 6
+[2026-03-08 18:50:32.273] === Page_Load Started ===
+[2026-03-08 18:50:32.275] Connection String: User Id=cinema;Password=1234;Data Source=localhost:1522/ORCLPDB;
+[2026-03-08 18:50:32.276] LoadMovies called with searchTerm: ''
+[2026-03-08 18:50:32.277] Creating OracleConnection...
+[2026-03-08 18:50:32.279] Connection opened successfully!
+[2026-03-08 18:50:32.281] Executing query: SELECT MovieID, Title, Genre, Language, Duration, ReleaseDate
+                                   FROM Movie ORDER BY ReleaseDate DESC
+[2026-03-08 18:50:32.286] ? Movies loaded successfully: 6 movies
+[2026-03-08 18:50:36.078] LoadMovieForEdit called with movieID: 6
+[2026-03-08 18:50:36.084] Connection opened for edit load
+[2026-03-08 18:50:36.086] ? Movie loaded for edit: 6
+[2026-03-08 18:50:41.376] === btnSave_Click Started ===
+[2026-03-08 18:50:41.378] Connection opened for Save operation
+[2026-03-08 18:50:41.379] Updating movie ID: 6
+[2026-03-08 18:50:41.386] ? Movie saved successfully
+[2026-03-08 18:50:41.387] LoadMovies called with searchTerm: ''
+[2026-03-08 18:50:41.388] Creating OracleConnection...
+[2026-03-08 18:50:41.389] Connection opened successfully!
+[2026-03-08 18:50:41.390] Executing query: SELECT MovieID, Title, Genre, Language, Duration, ReleaseDate
+                                   FROM Movie ORDER BY ReleaseDate DESC
+[2026-03-08 18:50:41.393] ? Movies loaded successfully: 6 movies
+[2026-03-08 18:50:43.589] === Page_Load Started ===
+[2026-03-08 18:50:43.595] Connection String: User Id=cinema;Password=1234;Data Source=localhost:1522/ORCLPDB;
+[2026-03-08 18:50:43.599] LoadMovies called with searchTerm: ''
+[2026-03-08 18:50:43.601] Creating OracleConnection...
+[2026-03-08 18:50:43.602] Connection opened successfully!
+[2026-03-08 18:50:43.603] Executing query: SELECT MovieID, Title, Genre, Language, Duration, ReleaseDate
+                                   FROM Movie ORDER BY ReleaseDate DESC
+[2026-03-08 18:50:43.606] ? Movies loaded successfully: 6 movies
+[2026-03-08 18:50:53.210] LoadMovieForEdit called with movieID: 6
+[2026-03-08 18:50:53.211] Connection opened for edit load
+[2026-03-08 18:50:53.216] ? Movie loaded for edit: 6
+[2026-03-08 18:50:57.629] === btnSave_Click Started ===
+[2026-03-08 18:50:57.635] Connection opened for Save operation
+[2026-03-08 18:50:57.637] Updating movie ID: 6
+[2026-03-08 18:50:57.643] ? Movie saved successfully
+[2026-03-08 18:50:57.644] LoadMovies called with searchTerm: ''
+[2026-03-08 18:50:57.645] Creating OracleConnection...
+[2026-03-08 18:50:57.645] Connection opened successfully!
+[2026-03-08 18:50:57.647] Executing query: SELECT MovieID, Title, Genre, Language, Duration, ReleaseDate
+                                   FROM Movie ORDER BY ReleaseDate DESC
+[2026-03-08 18:50:57.650] ? Movies loaded successfully: 6 movies
+[2026-03-08 18:51:00.545] LoadMovieForEdit called with movieID: 6
+[2026-03-08 18:51:00.549] Connection opened for edit load
+[2026-03-08 18:51:00.553] ? Movie loaded for edit: 6
+[2026-03-08 19:00:20.051] === Page_Load Started ===
+[2026-03-08 19:00:20.054] Connection String: User Id=cinema;Password=1234;Data Source=localhost:1522/ORCLPDB;
+[2026-03-08 19:00:20.056] LoadMovies called with searchTerm: ''
+[2026-03-08 19:00:20.057] Creating OracleConnection...
+[2026-03-08 19:00:20.062] Connection opened successfully!
+[2026-03-08 19:00:20.065] Executing query: SELECT MovieID, Title, Genre, Language, Duration, ReleaseDate
+                                   FROM Movie ORDER BY ReleaseDate DESC
+[2026-03-08 19:00:20.070] ? Movies loaded successfully: 6 movies
+[2026-03-08 19:00:53.501] DeleteMovie called with movieID: 6
+[2026-03-08 19:00:53.504] Connection opened for delete operation
+[2026-03-08 19:00:53.583] ? ERROR in DeleteMovie: ORA-02292: integrity constraint (CINEMA.SYS_C007772) violated - child record found
+https://docs.oracle.com/error-help/db/ora-02292/
+[2026-03-08 19:00:53.621] StackTrace:    at OracleInternal.ServiceObjects.OracleFailoverMgrImpl.OnError(OracleConnection connection, CallHistoryRecord chr, Object mi, Exception ex, Boolean bTopLevelCall, Boolean& bCanRecordNewCall)
+   at Oracle.ManagedDataAccess.Client.OracleCommand.ExecuteNonQuery()
+   at KumariCinema.MovieDetails.DeleteMovie(Int32 movieID) in C:\Users\asus\Desktop\KumariCinema\KumariCinema\MovieDetails.aspx.cs:line 345
