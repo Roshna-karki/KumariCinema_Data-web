@@ -151,7 +151,7 @@
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div class="page-header">
-        <h1>&#127917; Theatre Management</h1>
+        <h1><i class="fa-solid fa-building" style="margin-right: 10px; color: #6B4423;" aria-hidden="true"></i>Theatre Management</h1>
     </div>
 
     <asp:Label ID="lblMessage" runat="server" Visible="false"></asp:Label>

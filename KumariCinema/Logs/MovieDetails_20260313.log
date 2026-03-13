@@ -257,3 +257,39 @@ https://docs.oracle.com/error-help/db/ora-01109/
 [2026-03-13 15:46:25.458] ? Movies loaded successfully: 6 movies
 [2026-03-13 15:46:56.845] === btnSave_Click Started ===
 [2026-03-13 15:46:56.894] Duplicate movie detected: same title
+[2026-03-13 17:02:37.363] === Page_Load Started ===
+[2026-03-13 17:02:37.363] Connection String: User Id=cinema;Password=1234;Data Source=localhost:1522/ORCLPDB;
+[2026-03-13 17:02:37.373] LoadMovies called with searchTerm: ''
+[2026-03-13 17:02:37.373] Creating OracleConnection...
+[2026-03-13 17:02:37.373] Connection opened successfully!
+[2026-03-13 17:02:37.376] Executing query: SELECT MovieID, Title, Genre, Language, Duration, ReleaseDate
+                                   FROM Movie ORDER BY ReleaseDate DESC
+[2026-03-13 17:02:37.384] ? Movies loaded successfully: 6 movies
+[2026-03-13 17:58:04.435] === Page_Load Started ===
+[2026-03-13 17:58:04.435] Connection String: User Id=cinema;Password=1234;Data Source=localhost:1522/ORCLPDB;
+[2026-03-13 17:58:04.438] LoadMovies called with searchTerm: ''
+[2026-03-13 17:58:04.440] Creating OracleConnection...
+[2026-03-13 17:58:04.440] Connection opened successfully!
+[2026-03-13 17:58:04.442] Executing query: SELECT MovieID, Title, Genre, Language, Duration, ReleaseDate
+                                   FROM Movie ORDER BY ReleaseDate DESC
+[2026-03-13 17:58:04.467] ? Movies loaded successfully: 6 movies
+[2026-03-13 17:58:22.044] === Page_Load Started ===
+[2026-03-13 17:58:22.053] Connection String: User Id=cinema;Password=1234;Data Source=localhost:1522/ORCLPDB;
+[2026-03-13 17:58:22.053] LoadMovies called with searchTerm: ''
+[2026-03-13 17:58:22.055] Creating OracleConnection...
+[2026-03-13 17:58:22.055] Connection opened successfully!
+[2026-03-13 17:58:22.058] Executing query: SELECT MovieID, Title, Genre, Language, Duration, ReleaseDate
+                                   FROM Movie ORDER BY ReleaseDate DESC
+[2026-03-13 17:58:22.060] ? Movies loaded successfully: 6 movies
+[2026-03-13 17:59:06.854] === btnSave_Click Started ===
+[2026-03-13 17:59:06.973] Connection opened for Save operation
+[2026-03-13 17:59:06.975] Inserting new movie
+[2026-03-13 17:59:07.103] ? Movie saved successfully
+[2026-03-13 17:59:07.103] LoadMovies called with searchTerm: ''
+[2026-03-13 17:59:07.103] Creating OracleConnection...
+[2026-03-13 17:59:07.199] Connection opened successfully!
+[2026-03-13 17:59:07.199] Executing query: SELECT MovieID, Title, Genre, Language, Duration, ReleaseDate
+                                   FROM Movie ORDER BY ReleaseDate DESC
+[2026-03-13 17:59:07.217] ? Movies loaded successfully: 7 movies
+[2026-03-13 17:59:11.410] === btnSave_Click Started ===
+[2026-03-13 17:59:11.410] Validation failed: Title is empty

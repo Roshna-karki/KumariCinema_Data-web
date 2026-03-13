@@ -37,12 +37,13 @@
         /* STAT CARD */
         .stat-card {
             background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
-            border: 1px solid #6B4423;
+            border: 1px solid #475569;
             border-radius: 12px;
             padding: 24px;
             position: relative;
             overflow: hidden;
             transition: transform 0.2s ease, box-shadow 0.2s ease;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
         }
 
         .stat-card::before {
@@ -52,12 +53,12 @@
             left: 0;
             right: 0;
             height: 3px;
-            background: linear-gradient(90deg, #ffffff, #6B4423, #8B5A2B);
+            background: linear-gradient(90deg, #64748b, #6B4423, #8B5A2B);
         }
 
         .stat-card:hover {
             transform: translateY(-4px);
-            box-shadow: 0 12px 24px rgba(107, 68, 35, 0.3);
+            box-shadow: 0 12px 28px rgba(0, 0, 0, 0.35);
         }
 
         .stat-icon {
@@ -67,7 +68,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 24px;
+            font-size: 20px;
             margin-bottom: 16px;
         }
 
@@ -137,6 +138,7 @@
             font-weight: 600;
             color: #ffffff;
             margin-bottom: 16px;
+            letter-spacing: 0.3px;
         }
 
         .table {
@@ -241,7 +243,7 @@
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div class="page-header">
-        <h1>&#128200; Dashboard</h1>
+        <h1><i class="fa-solid fa-chart-line" style="margin-right: 10px; color: #6B4423;" aria-hidden="true"></i>Dashboard</h1>
         <div>
             <asp:Label ID="lblRefreshTime" runat="server" ForeColor="#64748b" Font-Size="14"></asp:Label>
         </div>
@@ -250,7 +252,7 @@
     <!-- STATISTICS CARDS (6 CARDS) -->
     <div class="grid grid-3">
         <div class="stat-card">
-            <div class="stat-icon red">&#127916;</div>
+            <div class="stat-icon red"><i class="fa-solid fa-clapperboard" aria-hidden="true"></i></div>
             <div class="stat-value">
                 <asp:Label ID="lblTotalMovies" runat="server">0</asp:Label>
             </div>
@@ -261,7 +263,7 @@
         </div>
 
         <div class="stat-card">
-            <div class="stat-icon green">&#127974;</div>
+            <div class="stat-icon green"><i class="fa-solid fa-building" aria-hidden="true"></i></div>
             <div class="stat-value">
                 <asp:Label ID="lblTotalTheatres" runat="server">0</asp:Label>
             </div>
@@ -272,7 +274,7 @@
         </div>
 
         <div class="stat-card">
-            <div class="stat-icon yellow">&#128337;</div>
+            <div class="stat-icon yellow"><i class="fa-solid fa-clock" aria-hidden="true"></i></div>
             <div class="stat-value">
                 <asp:Label ID="lblShowsToday" runat="server">0</asp:Label>
             </div>
@@ -283,7 +285,7 @@
         </div>
 
         <div class="stat-card">
-            <div class="stat-icon pink">&#127915;</div>
+            <div class="stat-icon pink"><i class="fa-solid fa-ticket" aria-hidden="true"></i></div>
             <div class="stat-value">
                 <asp:Label ID="lblTicketsSold" runat="server">0</asp:Label>
             </div>
@@ -294,7 +296,7 @@
         </div>
 
         <div class="stat-card">
-            <div class="stat-icon blue">&#128105;</div>
+            <div class="stat-icon blue"><i class="fa-solid fa-users" aria-hidden="true"></i></div>
             <div class="stat-value">
                 <asp:Label ID="lblTotalCustomers" runat="server">0</asp:Label>
             </div>
@@ -305,7 +307,7 @@
         </div>
 
         <div class="stat-card">
-            <div class="stat-icon teal">&#128176;</div>
+            <div class="stat-icon teal"><i class="fa-solid fa-indian-rupee-sign" aria-hidden="true"></i></div>
             <div class="stat-value" style="font-size: 24px;">
                 <asp:Label ID="lblRevenue" runat="server">Rs 0</asp:Label>
             </div>
@@ -337,7 +339,7 @@
 
     <!-- PAYMENT BREAKDOWN -->
     <div class="data-section">
-        <h3>&#128179; Payment Breakdown</h3>
+        <h3><i class="fa-solid fa-credit-card" style="margin-right: 8px; color: #94a3b8;" aria-hidden="true"></i>Payment Breakdown</h3>
         <div class="breakdown-grid">
             <div class="breakdown-item">
                 <div class="breakdown-number" style="color: #16a34a;">
@@ -371,7 +373,7 @@
 
     <!-- TICKET BREAKDOWN -->
     <div class="data-section">
-        <h3>&#127915; Ticket Status</h3>
+        <h3><i class="fa-solid fa-ticket" style="margin-right: 8px; color: #94a3b8;" aria-hidden="true"></i>Ticket Status</h3>
         <div class="breakdown-grid">
             <div class="breakdown-item">
                 <div class="breakdown-number" style="color: #2563eb;">
@@ -401,7 +403,7 @@
 
     <!-- NOW SHOWING -->
     <div class="data-section">
-        <h3>&#127916; Now Showing (Top 5 Movies)</h3>
+        <h3><i class="fa-solid fa-film" style="margin-right: 8px; color: #94a3b8;" aria-hidden="true"></i>Now Showing (Top 5 Movies)</h3>
         <asp:GridView ID="gvNowShowing" runat="server" CssClass="table" AllowPaging="false" AutoGenerateColumns="false">
             <Columns>
                 <asp:BoundField DataField="Title" HeaderText="Title" />
@@ -418,7 +420,7 @@
 
     <!-- RECENT BOOKINGS -->
     <div class="data-section">
-        <h3>&#128203; Recent Bookings</h3>
+        <h3><i class="fa-solid fa-calendar-check" style="margin-right: 8px; color: #94a3b8;" aria-hidden="true"></i>Recent Bookings</h3>
         <asp:GridView ID="gvRecentBookings" runat="server" CssClass="table" AllowPaging="false" AutoGenerateColumns="false">
             <Columns>
                 <asp:BoundField DataField="ConfirmationCode" HeaderText="Confirmation #" />
@@ -433,7 +435,7 @@
 
     <!-- HALLS OVERVIEW -->
     <div class="data-section">
-        <h3>&#127917; Halls Overview</h3>
+        <h3><i class="fa-solid fa-door-open" style="margin-right: 8px; color: #94a3b8;" aria-hidden="true"></i>Halls Overview</h3>
         <asp:GridView ID="gvHalls" runat="server" CssClass="table" AllowPaging="false" AutoGenerateColumns="false">
             <Columns>
                 <asp:BoundField DataField="HallName" HeaderText="Hall Name" />
@@ -449,7 +451,7 @@
 
     <!-- UPCOMING SHOWS -->
     <div class="data-section">
-        <h3>&#128337; Upcoming Shows</h3>
+        <h3><i class="fa-solid fa-clock" style="margin-right: 8px; color: #94a3b8;" aria-hidden="true"></i>Upcoming Shows</h3>
         <asp:GridView ID="gvUpcomingShows" runat="server" CssClass="table" AllowPaging="true" PageSize="10" AutoGenerateColumns="false">
             <Columns>
                 <asp:BoundField DataField="Title" HeaderText="Movie" />

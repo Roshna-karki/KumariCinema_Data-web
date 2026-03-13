@@ -196,7 +196,7 @@
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div class="page-header">
-        <h1>&#127916; Movie Management</h1>
+        <h1><i class="fa-solid fa-clapperboard" style="margin-right: 10px; color: #6B4423;" aria-hidden="true"></i>Movie Management</h1>
     </div>
 
     <!-- MESSAGE -->
@@ -260,7 +260,7 @@
 
     <!-- DATA SECTION -->
     <div class="data-section">
-        <h3>&#127910; All Movies</h3>
+        <h3><i class="fa-solid fa-film" style="margin-right: 8px; color: #94a3b8;" aria-hidden="true"></i>All Movies</h3>
 
         <div class="search-box">
             <asp:TextBox ID="txtSearch" runat="server" placeholder="Search by title or genre..." Width="400px" 

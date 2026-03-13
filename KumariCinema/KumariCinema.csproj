@@ -138,10 +138,6 @@
   <ItemGroup>
     <Content Include="About.aspx" />
     <Content Include="BookingDetails.aspx" />
-    <Content Include="BUILD_SUCCESS_REPORT.txt" />
-    <Content Include="BUSINESS_RULES_IMPLEMENTATION_GUIDE.txt" />
-    <Content Include="BUSINESS_RULES_SUMMARY.txt" />
-    <Content Include="COMPLETION_REPORT.txt" />
     <Content Include="Contact.aspx" />
     <Content Include="Content\bootstrap-grid.css" />
     <Content Include="Content\bootstrap-grid.min.css" />
@@ -162,27 +158,12 @@
     <Content Include="Content\Site.css" />
     <Content Include="CustomerDetails.aspx" />
     <Content Include="Dashboard.aspx" />
-    <Content Include="DATABASE_SETUP.sql" />
-    <Content Include="DATABINDING_ALIGNMENT_COMPLETE.txt" />
-    <Content Include="DATABINDING_UPDATE_SUMMARY.txt" />
-    <Content Include="DATABINDING_VERIFICATION_CHECKLIST.txt" />
     <Content Include="Default.aspx" />
-    <Content Include="ERROR_FIX_SUMMARY.txt" />
     <Content Include="favicon.ico" />
-    <Content Include="FIX_632_ERRORS.txt" />
-    <Content Include="FIX_PARSER_ERROR.txt" />
     <Content Include="Global.asax" />
     <Content Include="HallDetails.aspx" />
-    <Content Include="IMPLEMENTATION_SUMMARY.txt" />
-    <Content Include="INSTALL_ORACLE_CLIENT.txt" />
-    <Content Include="LOGGING_GUIDE.txt" />
     <Content Include="MovieDetails.aspx" />
-    <Content Include="ORACLE_DIAGNOSTICS.txt" />
     <Content Include="PaymentDetails.aspx" />
-    <Content Include="PROJECT_SUMMARY.txt" />
-    <Content Include="QUICK_LOG_ACCESS.txt" />
-    <Content Include="QUICK_REFERENCE.txt" />
-    <Content Include="README_FIXES.txt" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.esm.js" />
@@ -212,20 +193,13 @@
     <Content Include="Content\bootstrap-grid.min.css.map" />
     <Content Include="Content\bootstrap-grid.css.map" />
     <Content Include="AdminMaster.Master" />
-    <Content Include="README.md" />
     <Content Include="InstallOraclePackage.bat" />
-    <Content Include="BUSINESS_RULES_IMPLEMENTATION_GUIDE.md" />
-    <Content Include="IMPLEMENTATION_EXAMPLES.md" />
-    <Content Include="BUSINESS_RULES_SUMMARY.md" />
-    <Content Include="FINAL_INTEGRATION_GUIDE.md" />
     <None Include="Oracle.DataAccess.Common.Configuration.Section.xsd">
       <SubType>Designer</SubType>
     </None>
     <None Include="Oracle.ManagedDataAccess.Client.Configuration.Section.xsd">
       <SubType>Designer</SubType>
     </None>
-    <Content Include="README_BUSINESS_RULES.md" />
-    <Content Include="QUICK_REFERENCE.md" />
     <None Include="Scripts\jquery-3.7.0.intellisense.js" />
     <Content Include="Scripts\jquery-3.7.0.js" />
     <Content Include="Scripts\jquery-3.7.0.min.js" />
@@ -254,10 +228,8 @@
     <Content Include="Scripts\WebForms\WebParts.js" />
     <Content Include="Scripts\WebForms\WebUIValidation.js" />
     <Content Include="SeatDetails.aspx" />
-    <Content Include="SETUP_GUIDE.txt" />
     <Content Include="ShowtimeDetails.aspx" />
     <Content Include="Site.Master" />
-    <Content Include="START_HERE.txt" />
     <Content Include="TheatreDetails.aspx" />
     <Content Include="TicketDetails.aspx" />
     <Content Include="ViewSwitcher.ascx" />

@@ -26,7 +26,7 @@
     </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <h1 style="font-size: 32px; font-weight: 700; color: #ffffff; margin-bottom: 32px;">&#128101; Customer Management</h1>
+    <h1 style="font-size: 32px; font-weight: 700; color: #ffffff; margin-bottom: 32px;"><i class="fa-solid fa-users" style="margin-right: 10px; color: #6B4423;" aria-hidden="true"></i>Customer Management</h1>
     <asp:Label ID="lblMessage" runat="server" Visible="false"></asp:Label>
 
     <div class="form-container">

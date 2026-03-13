@@ -32,7 +32,7 @@
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div class="page-header">
-        <h1 style="font-size: 32px; font-weight: 700; color: #f1f5f9;">&#127917; Hall Management</h1>
+        <h1 style="font-size: 32px; font-weight: 700; color: #f1f5f9;"><i class="fa-solid fa-door-open" style="margin-right: 10px; color: #6B4423;" aria-hidden="true"></i>Hall Management</h1>
     </div>
 
     <asp:Label ID="lblMessage" runat="server" Visible="false"></asp:Label>

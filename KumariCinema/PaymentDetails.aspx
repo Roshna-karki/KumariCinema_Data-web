@@ -11,7 +11,7 @@
     </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <h1 style="font-size: 32px; font-weight: 700; color: #ffffff; margin-bottom: 32px;">&#128179; Payment Management</h1>
+    <h1 style="font-size: 32px; font-weight: 700; color: #ffffff; margin-bottom: 32px;"><i class="fa-solid fa-credit-card" style="margin-right: 10px; color: #6B4423;" aria-hidden="true"></i>Payment Management</h1>
     <p style="color: #94a3b8; margin-bottom: 24px;">Payments are created when a booking is confirmed. Below are all payments with who paid, booking and theatre/hall details, and payment method.</p>
     <asp:Label ID="lblMessage" runat="server" Visible="false"></asp:Label>
 
