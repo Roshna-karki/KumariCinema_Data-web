@@ -306,7 +306,7 @@ namespace KumariCinema
                 {
                     conn.Open();
                     DataTable dt = new DataTable();
-                    using (OracleCommand cmd = new OracleCommand("SELECT UserID, UserName FROM " + SchemaPrefix + "USERS ORDER BY UserName", conn))
+                    using (OracleCommand cmd = new OracleCommand("SELECT UserID, UserName FROM " + SchemaPrefix + "UserTable ORDER BY UserName", conn))
                     using (OracleDataAdapter adapter = new OracleDataAdapter(cmd))
                     {
                         adapter.Fill(dt);
@@ -332,7 +332,7 @@ namespace KumariCinema
                                "T.TheatreName, H.HallName, M.Title, S.ShowDate, TO_CHAR(NVL(S.StartTime, S.ShowTime), 'HH24:MI') AS ShowTime, " +
                                "NVL(P.PaymentAmount, 0) AS PaymentAmount " +
                                "FROM " + SchemaPrefix + "Booking B " +
-                               "LEFT JOIN " + SchemaPrefix + "USERS U ON B.UserID = U.UserID " +
+                               "LEFT JOIN " + SchemaPrefix + "UserTable U ON B.UserID = U.UserID " +
                                "LEFT JOIN " + SchemaPrefix + "Payment P ON B.PaymentID = P.PaymentID " +
                                "INNER JOIN " + SchemaPrefix + "Shows S ON B.ShowID = S.ShowID " +
                                "INNER JOIN " + SchemaPrefix + "Movie M ON S.MovieID = M.MovieID " +
@@ -360,9 +360,17 @@ namespace KumariCinema
             else if (ex.InnerException is OracleException)
                 oraCode = ((OracleException)ex.InnerException).Number;
             if (oraCode == 942)
-                ShowMessage("Database tables not found (ORA-00942). Run CREATE_TABLES_EXACT.sql and ALTER_Seat_AddHallID.sql as your connection user.", true);
+            {
+                ShowMessage(
+                    "Database tables not found (ORA-00942). Make sure all KumariCinema tables " +
+                    "(UserTable, Payment, Movie, Theatre, Hall, Shows, Seat, Price, Cancellation, Booking, Ticket) " +
+                    "exist in the same Oracle user as your connection string (cinema). If needed, run CREATE_TABLES_EXACT.sql as that user.",
+                    true);
+            }
             else
+            {
                 ShowMessage("Error (" + action + "): " + ex.Message, true);
+            }
         }
 
         protected void btnSave_Click(object sender, EventArgs e)

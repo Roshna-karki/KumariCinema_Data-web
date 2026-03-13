@@ -28,7 +28,7 @@ namespace KumariCinema
                     conn.Open();
                     DataTable dt = new DataTable();
                     using (OracleCommand cmd = new OracleCommand(
-                        @"SELECT UserID AS ""UserID"", UserName AS ""UserName"", PhoneNumber AS ""PhoneNumber"", UserEmail AS ""UserEmail"", UserAddress AS ""UserAddress"" FROM USERS ORDER BY UserName", conn))
+                        @"SELECT UserID AS ""UserID"", UserName AS ""UserName"", PhoneNumber AS ""PhoneNumber"", UserEmail AS ""UserEmail"", UserAddress AS ""UserAddress"" FROM UserTable ORDER BY UserName", conn))
                     using (OracleDataAdapter adapter = new OracleDataAdapter(cmd))
                     {
                         adapter.Fill(dt);
@@ -46,6 +46,45 @@ namespace KumariCinema
             if (string.IsNullOrEmpty(txtEmail.Text)) { ShowMessage("Email required", true); return; }
             if (string.IsNullOrEmpty(txtPhone.Text)) { ShowMessage("Phone required", true); return; }
 
+            // Validate email and phone uniqueness against UserTable
+            int? excludeUserID = ViewState["EditUserID"] != null ? (int?)Convert.ToInt32(ViewState["EditUserID"]) : null;
+            using (OracleConnection dupConn = new OracleConnection(connectionString))
+            {
+                try
+                {
+                    dupConn.Open();
+                    string dupQuery = @"SELECT COUNT(*) FROM UserTable 
+                                        WHERE (UPPER(TRIM(UserEmail)) = UPPER(TRIM(:email)) 
+                                               OR TRIM(PhoneNumber) = TRIM(:phone))";
+                    if (excludeUserID.HasValue)
+                    {
+                        dupQuery += " AND UserID <> :userid";
+                    }
+
+                    using (OracleCommand dupCmd = new OracleCommand(dupQuery, dupConn))
+                    {
+                        dupCmd.Parameters.Add(":email", OracleDbType.Varchar2).Value = txtEmail.Text.Trim();
+                        dupCmd.Parameters.Add(":phone", OracleDbType.Varchar2).Value = txtPhone.Text.Trim();
+                        if (excludeUserID.HasValue)
+                        {
+                            dupCmd.Parameters.Add(":userid", OracleDbType.Int32).Value = excludeUserID.Value;
+                        }
+
+                        int dupCount = Convert.ToInt32(dupCmd.ExecuteScalar() ?? 0);
+                        if (dupCount > 0)
+                        {
+                            ShowMessage("Email or phone number already exists.", true);
+                            return;
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    ShowMessage("Error validating customer: " + ex.Message, true);
+                    return;
+                }
+            }
+
             using (OracleConnection conn = new OracleConnection(connectionString))
             {
                 try
@@ -55,18 +94,18 @@ namespace KumariCinema
 
                     if (ViewState["EditUserID"] != null)
                     {
-                        query = @"UPDATE USERS SET UserName = :name, UserEmail = :email, PhoneNumber = :phone, UserAddress = :address
+                        query = @"UPDATE UserTable SET UserName = :name, UserEmail = :email, PhoneNumber = :phone, UserAddress = :address
                                  WHERE UserID = :userid";
                     }
                     else
                     {
                         int nextId = 1;
-                        using (OracleCommand cmdMax = new OracleCommand("SELECT NVL(MAX(UserID), 0) + 1 FROM USERS", conn))
+                        using (OracleCommand cmdMax = new OracleCommand("SELECT NVL(MAX(UserID), 0) + 1 FROM UserTable", conn))
                         {
                             object o = cmdMax.ExecuteScalar();
                             nextId = Convert.ToInt32(o);
                         }
-                        query = @"INSERT INTO USERS (UserID, UserName, UserEmail, PhoneNumber, UserAddress)
+                        query = @"INSERT INTO UserTable (UserID, UserName, UserEmail, PhoneNumber, UserAddress)
                                  VALUES (:userid, :name, :email, :phone, :address)";
                         using (OracleCommand cmd = new OracleCommand(query, conn))
                         {
@@ -134,7 +173,7 @@ namespace KumariCinema
                 try
                 {
                     conn.Open();
-                    using (OracleCommand cmd = new OracleCommand("SELECT * FROM USERS WHERE UserID = :userid", conn))
+                    using (OracleCommand cmd = new OracleCommand("SELECT * FROM UserTable WHERE UserID = :userid", conn))
                     {
                         cmd.Parameters.Add(":userid", OracleDbType.Int32).Value = userID;
                         using (OracleDataReader reader = cmd.ExecuteReader())
@@ -162,7 +201,7 @@ namespace KumariCinema
                 try
                 {
                     conn.Open();
-                    using (OracleCommand cmd = new OracleCommand("DELETE FROM USERS WHERE UserID = :userid", conn))
+                    using (OracleCommand cmd = new OracleCommand("DELETE FROM UserTable WHERE UserID = :userid", conn))
                     {
                         cmd.Parameters.Add(":userid", OracleDbType.Int32).Value = userID;
                         cmd.ExecuteNonQuery();
@@ -174,7 +213,6 @@ namespace KumariCinema
             }
         }
 
-        /// <summary>Get string from reader by column name (Oracle may return uppercase names).</summary>
         private static string GetReaderString(OracleDataReader reader, string columnName)
         {
             try

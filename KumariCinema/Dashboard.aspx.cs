@@ -75,7 +75,7 @@ namespace KumariCinema
                     lblTicketsChange.Text = "Today";
 
                     // 5. Total Customers
-                    int totalCustomers = GetCount(conn, "SELECT COUNT(*) FROM USERS");
+                    int totalCustomers = GetCount(conn, "SELECT COUNT(*) FROM UserTable");
                     lblTotalCustomers.Text = totalCustomers.ToString();
                     lblCustomersChange.Text = $"{totalCustomers} members";
 

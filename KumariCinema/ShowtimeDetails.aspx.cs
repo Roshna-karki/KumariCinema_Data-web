@@ -111,6 +111,29 @@ namespace KumariCinema
                     string timeStr = ddlShowTime.SelectedValue + ":00";
                     string timestampStr = showDate.ToString("yyyy-MM-dd") + " " + timeStr;
 
+                    // Prevent duplicate shows in the same hall at the same date/time
+                    int hallId = Convert.ToInt32(ddlHall.SelectedValue);
+                    int movieId = Convert.ToInt32(ddlMovie.SelectedValue);
+                    int existingShowId = ViewState["EditShowID"] != null ? Convert.ToInt32(ViewState["EditShowID"]) : 0;
+                    using (OracleCommand dupCmd = new OracleCommand(
+                        @"SELECT COUNT(*) FROM Shows 
+                          WHERE HallID = :hallid 
+                            AND ShowDate = :showdate 
+                            AND NVL(StartTime, ShowTime) = TO_TIMESTAMP(:timestr, 'YYYY-MM-DD HH24:MI:SS')", conn))
+                    {
+                        dupCmd.BindByName = true;
+                        dupCmd.Parameters.Add(":hallid", OracleDbType.Int32).Value = hallId;
+                        dupCmd.Parameters.Add(":showdate", OracleDbType.Date).Value = showDate;
+                        dupCmd.Parameters.Add(":timestr", OracleDbType.Varchar2).Value = timestampStr;
+
+                        int dupCount = Convert.ToInt32(dupCmd.ExecuteScalar());
+                        if (existingShowId == 0 && dupCount > 0)
+                        {
+                            ShowMessage("A show already exists in this hall at the selected date and time.", true);
+                            return;
+                        }
+                    }
+
                     if (ViewState["EditShowID"] != null)
                     {
                         query = @"UPDATE Shows SET ShowDate = :showdate, 

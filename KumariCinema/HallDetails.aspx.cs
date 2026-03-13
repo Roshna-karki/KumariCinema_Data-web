@@ -87,6 +87,20 @@ namespace KumariCinema
                     }
                     else
                     {
+                        // Ensure combination of HallName + Theatre does not already exist
+                        using (OracleCommand cmdCheck = new OracleCommand(
+                            "SELECT COUNT(*) FROM Hall WHERE UPPER(TRIM(HallName)) = UPPER(TRIM(:name)) AND TheatreID = :theatre", conn))
+                        {
+                            cmdCheck.Parameters.Add(":name", OracleDbType.Varchar2).Value = txtHallName.Text.Trim();
+                            cmdCheck.Parameters.Add(":theatre", OracleDbType.Int32).Value = Convert.ToInt32(ddlTheatre.SelectedValue);
+                            object existing = cmdCheck.ExecuteScalar();
+                            if (Convert.ToInt32(existing) > 0)
+                            {
+                                ShowMessage("Hall name already exists in this theatre.", true);
+                                return;
+                            }
+                        }
+
                         int nextId = 1;
                         using (OracleCommand cmdMax = new OracleCommand("SELECT NVL(MAX(HallID), 0) + 1 FROM Hall", conn))
                         {

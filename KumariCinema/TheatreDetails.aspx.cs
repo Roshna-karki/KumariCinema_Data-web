@@ -73,6 +73,27 @@ namespace KumariCinema
                 try
                 {
                     conn.Open();
+
+                    // If adding a new theatre, prevent duplicates with same name in same city
+                    if (ViewState["EditTheatreID"] == null)
+                    {
+                        using (OracleCommand dupCmd = new OracleCommand(
+                            @"SELECT COUNT(*) FROM Theatre 
+                              WHERE UPPER(TRIM(TheatreName)) = UPPER(TRIM(:name)) 
+                                AND UPPER(TRIM(City)) = UPPER(TRIM(:city))", conn))
+                        {
+                            dupCmd.Parameters.Add(":name", OracleDbType.Varchar2).Value = txtTheatreName.Text.Trim();
+                            dupCmd.Parameters.Add(":city", OracleDbType.Varchar2).Value = txtCity.Text.Trim();
+
+                            int existing = Convert.ToInt32(dupCmd.ExecuteScalar() ?? 0);
+                            if (existing > 0)
+                            {
+                                ShowMessage("Theatre with same name already exists in this city.", true);
+                                return;
+                            }
+                        }
+                    }
+
                     string query;
 
                     if (ViewState["EditTheatreID"] != null)

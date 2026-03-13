@@ -40,7 +40,7 @@ namespace KumariCinema
                                "T.TheatreName, H.HallName, M.Title, S.ShowDate " +
                                "FROM " + SchemaPrefix + "Payment P " +
                                "LEFT JOIN " + SchemaPrefix + "Booking B ON P.PaymentID = B.PaymentID " +
-                               "LEFT JOIN " + SchemaPrefix + "USERS U ON B.UserID = U.UserID " +
+                               "LEFT JOIN " + SchemaPrefix + "UserTable U ON B.UserID = U.UserID " +
                                "LEFT JOIN " + SchemaPrefix + "Shows S ON B.ShowID = S.ShowID " +
                                "LEFT JOIN " + SchemaPrefix + "Movie M ON S.MovieID = M.MovieID " +
                                "LEFT JOIN " + SchemaPrefix + "Hall H ON S.HallID = H.HallID " +

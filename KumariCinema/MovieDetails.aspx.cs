@@ -5,6 +5,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using Oracle.ManagedDataAccess.Client;
 using System.IO;
+using System.Text.RegularExpressions;
 
 namespace KumariCinema
 {
@@ -141,6 +142,36 @@ namespace KumariCinema
                 LogError("Validation failed: ReleaseDate is empty");
                 ShowMessage("Release Date is required", true);
                 return;
+            }
+
+            // Prevent duplicate movies: Title must be unique (case-insensitive, ignoring extra spaces)
+            DateTime releaseDate = Convert.ToDateTime(txtReleaseDate.Text.Trim());
+            int existingMovieId = ViewState["EditMovieID"] != null ? Convert.ToInt32(ViewState["EditMovieID"]) : 0;
+            using (OracleConnection dupConn = new OracleConnection(connectionString))
+            {
+                dupConn.Open();
+                string dupQuery = "SELECT COUNT(*) FROM Movie WHERE UPPER(TRIM(Title)) = UPPER(TRIM(:title))";
+                if (existingMovieId > 0)
+                {
+                    dupQuery += " AND MovieID <> :movieid";
+                }
+
+                using (OracleCommand dupCmd = new OracleCommand(dupQuery, dupConn))
+                {
+                    dupCmd.Parameters.Add(":title", OracleDbType.Varchar2).Value = txtTitle.Text.Trim();
+                    if (existingMovieId > 0)
+                    {
+                        dupCmd.Parameters.Add(":movieid", OracleDbType.Int32).Value = existingMovieId;
+                    }
+
+                    int dupCount = Convert.ToInt32(dupCmd.ExecuteScalar());
+                    if (dupCount > 0)
+                    {
+                        LogError("Duplicate movie detected: same title");
+                        ShowMessage("A movie with the same title already exists.", true);
+                        return;
+                    }
+                }
             }
 
             try
@@ -312,7 +343,7 @@ namespace KumariCinema
                             }
                             else
                             {
-                                LogError($"?? No movie found with ID: {movieID}");
+                                LogError($"? No movie found with ID: {movieID}");
                             }
                         }
                     }
@@ -373,5 +404,240 @@ namespace KumariCinema
             lblMessage.CssClass = isError ? "alert alert-danger" : "alert alert-success";
             lblMessage.Visible = true;
         }
+    }
+
+    /// <summary>
+    /// Standalone business rule validator utility class
+    /// </summary>
+    public static class BusinessRuleValidator
+    {
+        public static ValidationResult ValidateMovieTitleUnique(string connectionString, string title, int? excludeMovieID = null)
+        {
+            if (string.IsNullOrWhiteSpace(title))
+                return new ValidationResult { IsValid = false, ErrorMessage = "Movie title cannot be empty." };
+
+            using (OracleConnection conn = new OracleConnection(connectionString))
+            {
+                try
+                {
+                    conn.Open();
+                    string query = "SELECT COUNT(*) FROM Movie WHERE UPPER(TRIM(Title)) = UPPER(TRIM(:title))";
+                    if (excludeMovieID.HasValue) query += " AND MovieID != :movieid";
+
+                    using (OracleCommand cmd = new OracleCommand(query, conn))
+                    {
+                        cmd.Parameters.Add(":title", OracleDbType.Varchar2).Value = title.Trim();
+                        if (excludeMovieID.HasValue) cmd.Parameters.Add(":movieid", OracleDbType.Int32).Value = excludeMovieID.Value;
+
+                        int count = Convert.ToInt32(cmd.ExecuteScalar() ?? 0);
+                        if (count > 0)
+                            return new ValidationResult { IsValid = false, ErrorMessage = $"Movie '{title}' already exists. Movie titles must be unique." };
+                    }
+                }
+                catch (Exception ex)
+                {
+                    return new ValidationResult { IsValid = false, ErrorMessage = $"Database error: {ex.Message}" };
+                }
+            }
+            return new ValidationResult { IsValid = true, ErrorMessage = "" };
+        }
+
+        public static ValidationResult ValidateTheatreNameInCity(string connectionString, string theatreName, string city, int? excludeTheatreID = null)
+        {
+            if (string.IsNullOrWhiteSpace(theatreName) || string.IsNullOrWhiteSpace(city))
+                return new ValidationResult { IsValid = false, ErrorMessage = "Theatre name and city are required." };
+
+            using (OracleConnection conn = new OracleConnection(connectionString))
+            {
+                try
+                {
+                    conn.Open();
+                    string query = "SELECT COUNT(*) FROM Theatre WHERE UPPER(TRIM(TheatreName)) = UPPER(TRIM(:name)) AND UPPER(TRIM(City)) = UPPER(TRIM(:city))";
+                    if (excludeTheatreID.HasValue) query += " AND TheatreID != :theatreid";
+
+                    using (OracleCommand cmd = new OracleCommand(query, conn))
+                    {
+                        cmd.Parameters.Add(":name", OracleDbType.Varchar2).Value = theatreName.Trim();
+                        cmd.Parameters.Add(":city", OracleDbType.Varchar2).Value = city.Trim();
+                        if (excludeTheatreID.HasValue) cmd.Parameters.Add(":theatreid", OracleDbType.Int32).Value = excludeTheatreID.Value;
+
+                        int count = Convert.ToInt32(cmd.ExecuteScalar() ?? 0);
+                        if (count > 0)
+                            return new ValidationResult { IsValid = false, ErrorMessage = $"Theatre '{theatreName}' already exists in {city}." };
+                    }
+                }
+                catch (Exception ex)
+                {
+                    return new ValidationResult { IsValid = false, ErrorMessage = $"Database error: {ex.Message}" };
+                }
+            }
+            return new ValidationResult { IsValid = true, ErrorMessage = "" };
+        }
+
+        public static ValidationResult ValidateEmailUnique(string connectionString, string email, int? excludeUserID = null)
+        {
+            if (string.IsNullOrWhiteSpace(email))
+                return new ValidationResult { IsValid = false, ErrorMessage = "Email cannot be empty." };
+
+            using (OracleConnection conn = new OracleConnection(connectionString))
+            {
+                try
+                {
+                    conn.Open();
+                    string query = "SELECT COUNT(*) FROM Users WHERE UPPER(TRIM(Email)) = UPPER(TRIM(:email)) OR UPPER(TRIM(UserEmail)) = UPPER(TRIM(:email))";
+                    if (excludeUserID.HasValue) query += " AND UserID != :userid";
+
+                    using (OracleCommand cmd = new OracleCommand(query, conn))
+                    {
+                        cmd.Parameters.Add(":email", OracleDbType.Varchar2).Value = email.Trim();
+                        if (excludeUserID.HasValue) cmd.Parameters.Add(":userid", OracleDbType.Int32).Value = excludeUserID.Value;
+
+                        int count = Convert.ToInt32(cmd.ExecuteScalar() ?? 0);
+                        if (count > 0)
+                            return new ValidationResult { IsValid = false, ErrorMessage = $"Email '{email}' is already registered." };
+                    }
+                }
+                catch { }
+            }
+            return new ValidationResult { IsValid = true, ErrorMessage = "" };
+        }
+
+        public static ValidationResult ValidatePhoneNumberUnique(string connectionString, string phoneNumber, int? excludeUserID = null)
+        {
+            if (string.IsNullOrWhiteSpace(phoneNumber))
+                return new ValidationResult { IsValid = false, ErrorMessage = "Phone number cannot be empty." };
+
+            using (OracleConnection conn = new OracleConnection(connectionString))
+            {
+                try
+                {
+                    conn.Open();
+                    string query = "SELECT COUNT(*) FROM Users WHERE (UPPER(TRIM(ContactNumber)) = UPPER(TRIM(:phone)) OR UPPER(TRIM(PhoneNumber)) = UPPER(TRIM(:phone)))";
+                    if (excludeUserID.HasValue) query += " AND UserID != :userid";
+
+                    using (OracleCommand cmd = new OracleCommand(query, conn))
+                    {
+                        cmd.Parameters.Add(":phone", OracleDbType.Varchar2).Value = phoneNumber.Trim();
+                        if (excludeUserID.HasValue) cmd.Parameters.Add(":userid", OracleDbType.Int32).Value = excludeUserID.Value;
+
+                        int count = Convert.ToInt32(cmd.ExecuteScalar() ?? 0);
+                        if (count > 0)
+                            return new ValidationResult { IsValid = false, ErrorMessage = $"Phone '{phoneNumber}' is already registered." };
+                    }
+                }
+                catch { }
+            }
+            return new ValidationResult { IsValid = true, ErrorMessage = "" };
+        }
+
+        public static ValidationResult ValidateTicketCancellationTiming(string connectionString, int ticketID)
+        {
+            if (ticketID <= 0)
+                return new ValidationResult { IsValid = false, ErrorMessage = "Invalid ticket ID." };
+
+            using (OracleConnection conn = new OracleConnection(connectionString))
+            {
+                try
+                {
+                    conn.Open();
+                    string query = "SELECT S.ShowDate, S.StartTime, S.ShowTime, T.TicketStatus FROM Ticket T INNER JOIN Booking B ON T.BookingID = B.BookingID INNER JOIN Shows S ON B.ShowID = S.ShowID WHERE T.TicketID = :ticketid";
+
+                    using (OracleCommand cmd = new OracleCommand(query, conn))
+                    {
+                        cmd.Parameters.Add(":ticketid", OracleDbType.Int32).Value = ticketID;
+
+                        using (OracleDataReader reader = cmd.ExecuteReader())
+                        {
+                            if (!reader.Read())
+                                return new ValidationResult { IsValid = false, ErrorMessage = "Ticket not found." };
+
+                            string ticketStatus = reader["TicketStatus"]?.ToString() ?? "";
+                            if (ticketStatus.Equals("CANCELLED", StringComparison.OrdinalIgnoreCase))
+                                return new ValidationResult { IsValid = false, ErrorMessage = "Ticket already cancelled." };
+
+                            DateTime showDate;
+                            object showDateVal = reader["ShowDate"];
+                            if (showDateVal is DateTime dt)
+                                showDate = dt.Date;
+                            else if (showDateVal != null && showDateVal != DBNull.Value && DateTime.TryParse(showDateVal.ToString(), out DateTime parsedDate))
+                                showDate = parsedDate.Date;
+                            else
+                                return new ValidationResult { IsValid = false, ErrorMessage = "Invalid show date." };
+
+                            // Determine show time of day robustly from StartTime / ShowTime (which may be DATE or string)
+                            TimeSpan showTimeOfDay = TimeSpan.Zero;
+                            object startVal = reader["StartTime"] != DBNull.Value ? reader["StartTime"] : reader["ShowTime"];
+                            if (startVal is DateTime dtTime)
+                            {
+                                showTimeOfDay = dtTime.TimeOfDay;
+                            }
+                            else if (startVal != null && startVal != DBNull.Value)
+                            {
+                                var raw = startVal.ToString().Trim();
+                                if (DateTime.TryParse(raw, out DateTime parsedDateTime))
+                                {
+                                    showTimeOfDay = parsedDateTime.TimeOfDay;
+                                }
+                                else if (!string.IsNullOrEmpty(raw))
+                                {
+                                    // Last‑resort parsing: split numeric components
+                                    int hours = 0, minutes = 0;
+                                    string[] timeParts = raw.Split(new[] { ':', '.', ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                                    if (timeParts.Length >= 2)
+                                    {
+                                        int.TryParse(timeParts[0], System.Globalization.NumberStyles.Integer, System.Globalization.CultureInfo.InvariantCulture, out hours);
+                                        int.TryParse(timeParts[1], System.Globalization.NumberStyles.Integer, System.Globalization.CultureInfo.InvariantCulture, out minutes);
+                                    }
+                                    else if (timeParts.Length == 1 && decimal.TryParse(timeParts[0], System.Globalization.NumberStyles.Number, System.Globalization.CultureInfo.InvariantCulture, out decimal hourDec))
+                                    {
+                                        hours = (int)Math.Floor(hourDec);
+                                        minutes = (int)Math.Round((hourDec - hours) * 60);
+                                    }
+                                    showTimeOfDay = new TimeSpan(hours, minutes, 0);
+                                }
+                            }
+
+                            DateTime showStartDateTime = showDate.Add(showTimeOfDay);
+
+                            // Use Nepal Standard Time for cancellation rule so it matches Kathmandu local time
+                            DateTime currentTime;
+                            try
+                            {
+                                var nepalTz = TimeZoneInfo.FindSystemTimeZoneById("Nepal Standard Time");
+                                currentTime = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, nepalTz);
+                            }
+                            catch
+                            {
+                                // Fallback to server local time if Nepal time zone is not available
+                                currentTime = DateTime.Now;
+                            }
+                            TimeSpan timeUntilShow = showStartDateTime - currentTime;
+
+                            if (timeUntilShow.TotalMinutes <= 60)
+                            {
+                                int minutesRemaining = (int)Math.Ceiling(timeUntilShow.TotalMinutes);
+                                if (minutesRemaining < 0)
+                                    return new ValidationResult { IsValid = false, ErrorMessage = "Show already started. Cannot cancel." };
+                                else
+                                    return new ValidationResult { IsValid = false, ErrorMessage = $"Cancellation window closed. Only {minutesRemaining} min left. Must be 1+ hour before show." };
+                            }
+
+                            int minutesBeforeShow = (int)Math.Floor(timeUntilShow.TotalMinutes);
+                            return new ValidationResult { IsValid = true, ErrorMessage = $"Cancellation allowed ({minutesBeforeShow} min until show)." };
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    return new ValidationResult { IsValid = false, ErrorMessage = $"Database error: {ex.Message}" };
+                }
+            }
+        }
+    }
+
+    public class ValidationResult
+    {
+        public bool IsValid { get; set; }
+        public string ErrorMessage { get; set; } = "";
     }
 }
