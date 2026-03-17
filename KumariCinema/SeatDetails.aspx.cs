@@ -16,6 +16,8 @@ namespace KumariCinema
             if (!IsPostBack)
             {
                 LoadSeats();
+                // New seats should be available by default
+                chkAvailable.Checked = true;
             }
         }
 
@@ -118,7 +120,8 @@ namespace KumariCinema
         {
             ddlRow.SelectedIndex = 0;
             txtSeatNumber.Text = "";
-            chkAvailable.Checked = false;
+            // New seats should be available by default
+            chkAvailable.Checked = true;
         }
 
         private void ShowMessage(string message, bool isError)

@@ -316,6 +316,28 @@
                 gap: 16px;
             }
         }
+
+        /* Searchable dropdown helper (enabled per-select via CssClass) */
+        .js-dropdown-search-wrap {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .js-dropdown-search-input {
+            width: 100%;
+            padding: 12px;
+            background: var(--primary-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            color: var(--text-primary);
+            outline: none;
+        }
+
+        .js-dropdown-search-input:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.15);
+        }
     </style>
     <asp:ContentPlaceHolder ID="head" runat="server">
     </asp:ContentPlaceHolder>
@@ -368,7 +390,7 @@
                 <div class="top-bar">
                     <div class="search-bar">
                         <i class="fa-solid fa-search" style="color: var(--text-secondary);" aria-hidden="true"></i>
-                        <input type="text" placeholder="Search movies, bookings, customers..." />
+                        <input id="topSearchInput" type="text" placeholder="Search on this page..." />
                     </div>
                     <div class="user-profile">
                         <div class="user-avatar">KC</div>
@@ -384,5 +406,7 @@
             </div>
         </div>
     </form>
+    <script src="Scripts/dropdown-search.js"></script>
+    <script src="Scripts/top-search-filter.js"></script>
 </body>
 </html>

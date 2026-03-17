@@ -1,0 +1,54 @@
+[2026-03-18 01:57:47.193] === Page_Load Started ===
+[2026-03-18 01:57:47.204] Connection String: User Id=cinema;Password=1234;Data Source=localhost:1522/ORCLPDB;
+[2026-03-18 01:57:47.205] LoadMovies called with searchTerm: ''
+[2026-03-18 01:57:47.206] Creating OracleConnection...
+[2026-03-18 01:57:47.208] Connection opened successfully!
+[2026-03-18 01:57:47.208] Executing query: SELECT MovieID, Title, Genre, Language, Duration, ReleaseDate
+                                   FROM Movie ORDER BY ReleaseDate DESC
+[2026-03-18 01:57:47.211] ? Movies loaded successfully: 9 movies
+[2026-03-18 01:58:00.171] DeleteMovie called with movieID: 7
+[2026-03-18 01:58:00.171] Connection opened for delete operation
+[2026-03-18 01:58:00.509] ? ERROR in DeleteMovie: ORA-02292: integrity constraint (CINEMA.SYS_C007772) violated - child record found
+https://docs.oracle.com/error-help/db/ora-02292/
+[2026-03-18 01:58:00.548] StackTrace:    at OracleInternal.ServiceObjects.OracleFailoverMgrImpl.OnError(OracleConnection connection, CallHistoryRecord chr, Object mi, Exception ex, Boolean bTopLevelCall, Boolean& bCanRecordNewCall)
+   at Oracle.ManagedDataAccess.Client.OracleCommand.ExecuteNonQuery()
+   at KumariCinema.MovieDetails.DeleteMovie(Int32 movieID) in C:\Users\asus\Desktop\KumariCinema\KumariCinema\MovieDetails.aspx.cs:line 376
+[2026-03-18 01:59:02.388] === Page_Load Started ===
+[2026-03-18 01:59:02.390] Connection String: User Id=cinema;Password=1234;Data Source=localhost:1522/ORCLPDB;
+[2026-03-18 01:59:02.392] LoadMovies called with searchTerm: ''
+[2026-03-18 01:59:02.394] Creating OracleConnection...
+[2026-03-18 01:59:02.395] Connection opened successfully!
+[2026-03-18 01:59:02.396] Executing query: SELECT MovieID, Title, Genre, Language, Duration, ReleaseDate
+                                   FROM Movie ORDER BY ReleaseDate DESC
+[2026-03-18 01:59:02.397] ? Movies loaded successfully: 9 movies
+[2026-03-18 02:01:55.024] === Page_Load Started ===
+[2026-03-18 02:01:55.025] Connection String: User Id=cinema;Password=1234;Data Source=localhost:1522/ORCLPDB;
+[2026-03-18 02:01:55.025] LoadMovies called with searchTerm: ''
+[2026-03-18 02:01:55.027] Creating OracleConnection...
+[2026-03-18 02:01:55.029] Connection opened successfully!
+[2026-03-18 02:01:55.029] Executing query: SELECT MovieID, Title, Genre, Language, Duration, ReleaseDate
+                                   FROM Movie ORDER BY ReleaseDate DESC
+[2026-03-18 02:01:55.034] ? Movies loaded successfully: 9 movies
+[2026-03-18 02:45:25.484] === Page_Load Started ===
+[2026-03-18 02:45:25.484] Connection String: User Id=cinema;Password=1234;Data Source=localhost:1522/ORCLPDB;
+[2026-03-18 02:45:25.486] LoadMovies called with searchTerm: ''
+[2026-03-18 02:45:25.486] Creating OracleConnection...
+[2026-03-18 02:45:25.490] Connection opened successfully!
+[2026-03-18 02:45:25.490] Executing query: SELECT MovieID, Title, Genre, Language, Duration, ReleaseDate
+                                   FROM Movie ORDER BY ReleaseDate DESC
+[2026-03-18 02:45:25.494] ? Movies loaded successfully: 9 movies
+[2026-03-18 02:45:30.406] DeleteMovie called with movieID: 6
+[2026-03-18 02:45:30.407] Connection opened for delete operation
+[2026-03-18 02:45:30.460] ? ERROR in DeleteMovie: ORA-02292: integrity constraint (CINEMA.SYS_C007772) violated - child record found
+https://docs.oracle.com/error-help/db/ora-02292/
+[2026-03-18 02:45:30.460] StackTrace:    at OracleInternal.ServiceObjects.OracleFailoverMgrImpl.OnError(OracleConnection connection, CallHistoryRecord chr, Object mi, Exception ex, Boolean bTopLevelCall, Boolean& bCanRecordNewCall)
+   at Oracle.ManagedDataAccess.Client.OracleCommand.ExecuteNonQuery()
+   at KumariCinema.MovieDetails.DeleteMovie(Int32 movieID) in C:\Users\asus\Desktop\KumariCinema\KumariCinema\MovieDetails.aspx.cs:line 376
+[2026-03-18 02:50:20.056] === Page_Load Started ===
+[2026-03-18 02:50:20.061] Connection String: User Id=cinema;Password=1234;Data Source=localhost:1522/ORCLPDB;
+[2026-03-18 02:50:20.061] LoadMovies called with searchTerm: ''
+[2026-03-18 02:50:20.063] Creating OracleConnection...
+[2026-03-18 02:50:20.063] Connection opened successfully!
+[2026-03-18 02:50:20.063] Executing query: SELECT MovieID, Title, Genre, Language, Duration, ReleaseDate
+                                   FROM Movie ORDER BY ReleaseDate DESC
+[2026-03-18 02:50:20.066] ? Movies loaded successfully: 9 movies

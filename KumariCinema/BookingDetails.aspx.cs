@@ -256,6 +256,7 @@ namespace KumariCinema
             pnlSeats.Visible = true;
             litSeatCount.Text = numTickets.ToString();
             chkSeats.Items.Clear();
+            btnSave.Enabled = true;
             string seatQuery = "SELECT SeatID, SeatRow || '-' || SeatNumber AS SeatLabel FROM " + SchemaPrefix + "Seat WHERE IsAvailable = 1 ORDER BY SeatRow, SeatNumber";
             try
             {
@@ -272,9 +273,18 @@ namespace KumariCinema
                             {
                                 DataTable dt = new DataTable();
                                 adapter.Fill(dt);
+                                int availableCount = dt.Rows.Count;
                                 foreach (DataRow row in dt.Rows)
                                 {
                                     chkSeats.Items.Add(new ListItem(row["SeatLabel"].ToString(), row["SeatID"].ToString()));
+                                }
+                                if (availableCount < numTickets)
+                                {
+                                    btnSave.Enabled = false;
+                                    ShowMessage(
+                                        "Only " + availableCount + " seat(s) are currently available for this hall. " +
+                                        "Please choose fewer tickets or select a different hall/show.",
+                                        true);
                                 }
                             }
                         }
@@ -287,9 +297,18 @@ namespace KumariCinema
                         {
                             DataTable dt = new DataTable();
                             adapter.Fill(dt);
+                            int availableCount = dt.Rows.Count;
                             foreach (DataRow row in dt.Rows)
                             {
                                 chkSeats.Items.Add(new ListItem(row["SeatLabel"].ToString(), row["SeatID"].ToString()));
+                            }
+                            if (availableCount < numTickets)
+                            {
+                                btnSave.Enabled = false;
+                                ShowMessage(
+                                    "Only " + availableCount + " seat(s) are currently available. " +
+                                    "Please choose fewer tickets or a different hall/show.",
+                                    true);
                             }
                         }
                     }
@@ -643,6 +662,7 @@ namespace KumariCinema
             chkSeats.Items.Clear();
             pnlSeats.Visible = false;
             pnlPrice.Visible = false;
+            btnSave.Enabled = true;
         }
 
         private void ShowMessage(string message, bool isError)
